@@ -54,3 +54,36 @@ You can track our progress toward the 1.0 GA release from the [1.0 project](http
 
 [CKEditor 5]: https://ckeditor5.github.io/
 [HTML Purifier documentation]: http://htmlpurifier.org/live/configdoc/plain.html
+
+## Plugins
+
+The following CKEditor plugins are included in the [bundled build](https://ckeditor.com/ckeditor-5/online-builder/):
+* Alignment
+* Autoformat
+* Block Quote
+* Bold
+* CKFinder
+* CKFinder upload adapter
+* Code
+* Code block
+* Heading
+* Horizontal line
+* HTML embed
+* Image
+* Image caption
+* Image style
+* Image toolbar
+* Indent
+* Italic
+* Link
+* List
+* Media embed
+* Paste from Office
+* Remove format
+* Strikethrough
+* Subscript
+* Superscript
+* Table
+* Table toolbar
+* Text transformation
+* Word count
