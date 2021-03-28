@@ -147,8 +147,11 @@ ClassicEditor
     .create(document.getElementById('{$nsId}'), {$ckeditorConfig})
     .then(function(editor) {
         // https://stackoverflow.com/a/45145797/1688568
-        editor.document.on('change', () => {
-            editor.updateEditorElement();
+        $(editor.element).closest('form').on('submit', function() {
+            editor.updateSourceElement();
+        });
+        editor.model.document.on('change:data', () => {
+            editor.updateSourceElement();
         });
     })
 ;
