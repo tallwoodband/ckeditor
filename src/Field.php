@@ -33,6 +33,9 @@ class Field extends \craft\base\Field
 
     // Properties
     // =========================================================================
+    
+    /** @var string|null The CKEditor config file to use */
+    public $ckeditorConfig;
 
     /**
      * @var string|null The HTML Purifier config file to use
@@ -59,6 +62,7 @@ class Field extends \craft\base\Field
     {
         return Craft::$app->getView()->renderTemplate('ckeditor/_field_settings', [
             'field' => $this,
+            'ckeditorConfigOptions' => $this->_getCustomConfigOptions('ckeditor'),
             'purifierConfigOptions' => $this->_getCustomConfigOptions('htmlpurifier'),
         ]);
     }
@@ -136,10 +140,11 @@ class Field extends \craft\base\Field
         $id = $view->formatInputId($this->handle);
         $nsId = $view->namespaceInputId($id);
         $encValue = htmlentities((string)$value, ENT_NOQUOTES, 'UTF-8');
+        $ckeditorConfig = Json::encode($this->_getCkeditorConfig());
 
         $js = <<<JS
 ClassicEditor
-    .create(document.getElementById('{$nsId}'))
+    .create(document.getElementById('{$nsId}'), {$ckeditorConfig})
     .then(function(editor) {
         // https://stackoverflow.com/a/45145797/1688568
         editor.document.on('change', () => {
@@ -215,6 +220,21 @@ CSS;
             'Attr.AllowedFrameTargets' => ['_blank'],
             'Attr.EnableID' => true,
         ];
+    }
+    
+    /**
+     * Returns the CKEditor config used by this field.
+     *
+     * @return array
+     */
+    private function _getCkeditorConfig(): array
+    {
+        if ($config = $this->_getConfig('ckeditor', $this->ckeditorConfig)) {
+            return $config;
+        }
+        
+        // Default config
+        return Json::decode('{}');
     }
 
     /**
